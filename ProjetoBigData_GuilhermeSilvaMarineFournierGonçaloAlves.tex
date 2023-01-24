@@ -490,26 +490,14 @@ projeto}\label{objetivos-e-fundamentos-do-projeto}}
     \begin{itemize}
 \tightlist
 \item
-  Este projeto de Machine Learning usando o Spark tem como objetivo
-  utilizar técnicas de aprendizado automático para analisar grandes
-  conjuntos de dados e prever resultados importantes para um determinado
-  tema de dados.
+ Este projeto de BigData tem como objetivo usar algoritmos de Machine Learning, recorrendo ao uso do PySpark, pois o mesmo ajuda o processamento de grandes quantidades de dados e é incorpurado com ferramentas para prever resultados importantes em relação a um conjunto de dados.
+ \item
+O Spark é uma ferramenta poderosa que permite o processamento distribuído de dados.
+Também vamos usar o Spark para ler, limpar e preparar os dados, avaliar e ajustar modelos e, finalmente, fazer previsões precisas e relevantes.
 \item
-  O Spark é uma ferramenta poderosa que permite o processamento
-  distribuído de dados, o que é essencial quando se trata de lidar com
-  grandes volumes de informações.
+Além disso, vamos usar técnicas avançadas de análise para visualizar e interpretar os resultados, a fim de obter insights valiosos.
 \item
-  Neste projeto, vamos utilizar o Spark para ler, limpar e preparar os
-  dados, aplicar técnicas de aprendizado automático, avaliar e ajustar
-  modelos e, finalmente, fazer previsões precisas e relevantes.
-\item
-  Além disso, vamos usar técnicas avançadas de análise para visualizar e
-  interpretar os resultados, a fim de obter insights valiosos e tomar
-  decisões informadas.
-\item
-  Este projeto é uma excelente oportunidade para aplicar e praticar
-  habilidades de Machine Learning em um ambiente de grande escala e de
-  alta performance.
+Este projeto é uma excelente oportunidade para aplicar e praticar habilidades de Machine Learning em um ambiente de grande escala e de alta performance.
 \end{itemize}
 
     \hypertarget{introduuxe7uxe3o-do-dataset-em-uso}{%
@@ -518,34 +506,27 @@ uso}\label{introduuxe7uxe3o-do-dataset-em-uso}}
 
     \begin{itemize}
 \tightlist
-\item
-  Este projeto de Machine Learning usa o Spark para analisar um conjuntoempresa
-  de dados sobre absentismo no trabalho.
-\item
-  O conjunto de dados inclui informações como as razões para ausência,
-  gastos de transporte, distância de residência para trabalho, tempo de
-  serviço, carga de trabalho, desempenho, educação, estado pessoal e
-  informações demográficas dos funcionários, bem como a duração do
-  absentismo.
-\item
-  O objetivo deste projeto é utilizar técnicas de aprendizado de máquina
-  para identificar padrões e tendências nos dados e prever a
-  probabilidade de absentismo no futuro.
-\item
-  Com base nas descobertas, pode-se tomar medidas para reduzir o
-  absentismo e melhorar o desempenho da empresa.
 
+O nosso conjunto de dados inclui informações como as razões para ausência, gastos de transporte, distância de residência para trabalho, tempo de serviço, carga de trabalho, desempenho, educação, estado pessoal e informações demográficas dos funcionários, bem como a duração do absentismo.
+\item
+Temos como objetivo utilizar técnicas Machine Learning para identificar padrões e tendências nos dados e talvez prever a probabilidade de uma certa pessoa se absentir no futuro.
+\item
+Com base nas descobertas, pode-se tomar medidas para reduzir o absentismo e melhorar o desempenho de uma empresa.
+\end{itemize}
 \newline
 
+
+\hypertarget{Criar uma Spark session}{%
+\subsection{Criar uma Spark session}
+\label{Criar uma Spark session}}
+\begin{itemize}
 \item
-    Criar uma ``SparkSession'' - Para se trabalhar com dados no Spark, é
+    Para se trabalhar com dados no Spark, é
     essencial criar uma SparkSession, este passo é fundamental e o primeiro
     a ser realizado. Ela é responsável por gerenciar a configuração do
     Spark, criar RDDs (Resilient Distributed Datasets) e DataFrames,
     registar tabelas temporárias e gerenciar os recursos do cluster
     utilizados.
-
-
 \item
   A SparkSession é o ponto de partida para trabalhar com dados
   estruturados e relacionais no Spark SQL, o módulo do Spark que fornece
@@ -728,7 +709,7 @@ Descrição das variáveis do DataFrame:
   Removeu-se a coluna ID pois não é relevante para os algoritmos de
   aprendizado de máquina.
 \end{itemize}
-
+\pagebreak
     Perguntas ao DataSet:
 
     1- Qual a dispersão dos pesos registados?
@@ -797,9 +778,7 @@ valor único na coluna ``Education''?
 \PY{n}{result}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
 \end{Verbatim}
 \end{tcolorbox}
-
     \begin{Verbatim}[commandchars=\\\{\}]
-+---------+---------------+
 |Education|sum\_absenteeism|
 +---------+---------------+
 |        1|         8786.0|
@@ -1668,19 +1647,15 @@ Root Mean Squared Error (RMSE) on test data = 0.167483
 
     \begin{itemize}
 \tightlist
-\item
-O objetivo de usar algoritmos de Machine Learning em conjuntos de dados é automatizar a descoberta de padrões e tendências nos dados. Isso pode ser usado para prever resultados futuros, identificar relações entre variáveis e tomar decisões automatizadas baseadas em dados. Além disso, os algoritmos de Machine Learning podem ser usados para melhorar a eficiência e precisão de processos existentes e para aumentar a capacidade de um sistema de lidar com grandes volumes de dados.
-No contexto deste projeto, o Spark foi usado para carregar, preparar e processar os dados, bem como para treinar e avaliar modelos de aprendizado de máquina usando técnicas de regressão, como árvore de decisão e random forest. Além disso, o Spark também foi usado para realizar consultas SQL e agregações para explorar e entender melhor os dados.
-\newline
-\item
-Foram utilizadas técnicas de processamento de dados, análise exploratória e modelagem de Machine Learning. Os dados foram limpos e preparados para o treinamento de modelos de previsão, incluindo árvore de decisão, random forest e regressão linear.
-Depois de comparar todos os algoritmos de Machine Learning concluimos que todos os modelos apresentaram resultados razoáveis, mas o modelo de random forest obteve o melhor desempenho com um R2 de 0.998374 e um RMSE de 0.167483. A análise gráfica também apontou uma boa relação entre os valores previstos e os valores reais. Em geral, pode-se concluir que este projeto foi capaz de prever o IMC (Variável usada em todos os algoritmos de previsão) com boa precisão utilizando técnicas de Machine Learning e fornecer uma compreensão mais profunda dos dados.
-\newline
-\item
-Foram encontradas algumas dificuldades ao longo deste projeto, tais como: 
-\newline Preparação dos dados (limpeza, manipulação e normalização dos dados), otimização de desempenho e interpretação dos resultados.
-Durante o projeto, tivemos que lidar com a limpeza e preparação dos dados, como a conversão de colunas de String para tipos numéricos, para que fossem adequados para a aplicação de algoritmos de regressão.
-Devido a essa conversão dos tipos de dados, foi necessário restringir a utilização dos algoritmos para apenas regressão, o que limitou as possibilidades de análise dos dados e, portanto, a capacidade de tirar conclusões mais completas sobre o conjunto de dados.
+\item Algoritmos de Machine Learning automatizam a descoberta de padrões e tendências em dados em dum determinado DataSet com o objetivo de prever resultados futuros, identificar relações entre variáveis e tomar decisões relevantes.
+\item Além disso, os algoritmos de Machine Learning podem ser usados para melhorar a eficiência e precisão de processos existentes e para aumentar a capacidade de um sistema de lidar com grandes volumes de dados, como por exemplo o PySpark.
+\item O Spark foi usado para carregar, preparar e processar os dados, bem como para treinar e avaliar modelos de Aprendizagem Automática usando principalmente técnicas de regressão, como árvores de decisão e random forest. Além disso, de também foi usado para realizar consultas SQL.
+\item No inicio deste projeto foram utilizadas técnicas de processamento de dados, análise exploratória. Os dados foram limpos e preparados para o treinamento dos modelos de previsão.
+\item Depois de comparar todos os algoritmos de Machine Learning concluimos que todos os modelos apresentaram resultados razoáveis, mas o modelo de random forest obteve o melhor desempenho com um R2 de 0.998374 e um RMSE de 0.167483. A análise gráfica também confirmou estes resultados, apresentando uma boa relação entre os valores previstos e os valores reais. 
+\item Em geral, pode-se concluir que este projeto foi capaz de prever o IMC (Variável usada em todos os algoritmos de previsão) de uma maenira eficaz.
+\item Foram encontradas algumas dificuldades ao longo deste projeto, tais como: Preparação dos dados (limpeza, manipulação e normalização dos dados), otimização de desempenho e interpretação dos resultados.
+\item Tivemos que também fazer algumas transformações dos dados, como a conversão de colunas de String para tipos numéricos, para que fossem adequados para a aplicação de algoritmos de regressão.
+\item Devido a essa conversão dos tipos de dados, foi necessário restringir a utilização dos algoritmos para apenas regressão, o que limitou as possibilidades de análise dos dados e, portanto, a capacidade de tirar conclusões mais completas sobre o conjunto de dados.
 \end{itemize}
 
 %%% Bibliografia
