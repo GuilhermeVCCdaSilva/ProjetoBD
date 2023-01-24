@@ -1,0 +1,1720 @@
+\documentclass[11pt]{article}
+
+    \usepackage[breakable]{tcolorbox}
+    \usepackage{parskip} % Stop auto-indenting (to mimic markdown behaviour)
+    
+    \usepackage{iftex}
+    \ifPDFTeX
+    	\usepackage[T1]{fontenc}
+    	\usepackage{mathpazo}
+    \else
+    	\usepackage{fontspec}
+    \fi
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % Maintain compatibility with old templates. Remove in nbconvert 6.0
+    \let\Oldincludegraphics\includegraphics
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionFormat{nocaption}{}
+    \captionsetup{format=nocaption,aboveskip=0pt,belowskip=0pt}
+
+    \usepackage[Export]{adjustbox} % Used to constrain images to a maximum size
+    \adjustboxset{max size={0.9\linewidth}{0.9\paperheight}}
+    \usepackage{float}
+    \floatplacement{figure}{H} % forces figures to be placed at the correct location
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range
+    \makeatletter % fix for grffile with XeLaTeX
+    \def\Gread@@xetex#1{%
+      \IfFileExists{"\Gin@base".bb}%
+      {\Gread@eps{\Gin@base.bb}}%
+      {\Gread@@xetex@aux#1}%
+    }
+    \makeatother
+
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    % The default LaTeX title has an obnoxious amount of whitespace. By default,
+    % titling removes some of it. It also provides customization options.
+    \usepackage{titling}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    \usepackage{mathrsfs}
+    
+
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+    \definecolor{ansi-default-inverse-fg}{HTML}{FFFFFF}
+    \definecolor{ansi-default-inverse-bg}{HTML}{000000}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatibility definitions
+    \def\gt{>}
+    \def\lt{<}
+    \let\Oldtex\TeX
+    \let\Oldlatex\LaTeX
+    \renewcommand{\TeX}{\textrm{\Oldtex}}
+    \renewcommand{\LaTeX}{\textrm{\Oldlatex}}
+    % Document parameters
+    % Document title
+    \title{ProjetoBigData\_GuilhermeSilvaMarineFournieGonÃ§aloAlves}
+    
+    
+    
+    
+    
+% Pygments definitions
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % For linebreaks inside Verbatim environment from package fancyvrb. 
+    \makeatletter
+        \newbox\Wrappedcontinuationbox 
+        \newbox\Wrappedvisiblespacebox 
+        \newcommand*\Wrappedvisiblespace {\textcolor{red}{\textvisiblespace}} 
+        \newcommand*\Wrappedcontinuationsymbol {\textcolor{red}{\llap{\tiny$\m@th\hookrightarrow$}}} 
+        \newcommand*\Wrappedcontinuationindent {3ex } 
+        \newcommand*\Wrappedafterbreak {\kern\Wrappedcontinuationindent\copy\Wrappedcontinuationbox} 
+        % Take advantage of the already applied Pygments mark-up to insert 
+        % potential linebreaks for TeX processing. 
+        %        {, <, #, %, $, ' and ": go to next line. 
+        %        _, }, ^, &, >, - and ~: stay at end of broken line. 
+        % Use of \textquotesingle for straight quote. 
+        \newcommand*\Wrappedbreaksatspecials {% 
+            \def\PYGZus{\discretionary{\char`\_}{\Wrappedafterbreak}{\char`\_}}% 
+            \def\PYGZob{\discretionary{}{\Wrappedafterbreak\char`\{}{\char`\{}}% 
+            \def\PYGZcb{\discretionary{\char`\}}{\Wrappedafterbreak}{\char`\}}}% 
+            \def\PYGZca{\discretionary{\char`\^}{\Wrappedafterbreak}{\char`\^}}% 
+            \def\PYGZam{\discretionary{\char`\&}{\Wrappedafterbreak}{\char`\&}}% 
+            \def\PYGZlt{\discretionary{}{\Wrappedafterbreak\char`\<}{\char`\<}}% 
+            \def\PYGZgt{\discretionary{\char`\>}{\Wrappedafterbreak}{\char`\>}}% 
+            \def\PYGZsh{\discretionary{}{\Wrappedafterbreak\char`\#}{\char`\#}}% 
+            \def\PYGZpc{\discretionary{}{\Wrappedafterbreak\char`\%}{\char`\%}}% 
+            \def\PYGZdl{\discretionary{}{\Wrappedafterbreak\char`\$}{\char`\$}}% 
+            \def\PYGZhy{\discretionary{\char`\-}{\Wrappedafterbreak}{\char`\-}}% 
+            \def\PYGZsq{\discretionary{}{\Wrappedafterbreak\textquotesingle}{\textquotesingle}}% 
+            \def\PYGZdq{\discretionary{}{\Wrappedafterbreak\char`\"}{\char`\"}}% 
+            \def\PYGZti{\discretionary{\char`\~}{\Wrappedafterbreak}{\char`\~}}% 
+        } 
+        % Some characters . , ; ? ! / are not pygmentized. 
+        % This macro makes them "active" and they will insert potential linebreaks 
+        \newcommand*\Wrappedbreaksatpunct {% 
+            \lccode`\~`\.\lowercase{\def~}{\discretionary{\hbox{\char`\.}}{\Wrappedafterbreak}{\hbox{\char`\.}}}% 
+            \lccode`\~`\,\lowercase{\def~}{\discretionary{\hbox{\char`\,}}{\Wrappedafterbreak}{\hbox{\char`\,}}}% 
+            \lccode`\~`\;\lowercase{\def~}{\discretionary{\hbox{\char`\;}}{\Wrappedafterbreak}{\hbox{\char`\;}}}% 
+            \lccode`\~`\:\lowercase{\def~}{\discretionary{\hbox{\char`\:}}{\Wrappedafterbreak}{\hbox{\char`\:}}}% 
+            \lccode`\~`\?\lowercase{\def~}{\discretionary{\hbox{\char`\?}}{\Wrappedafterbreak}{\hbox{\char`\?}}}% 
+            \lccode`\~`\!\lowercase{\def~}{\discretionary{\hbox{\char`\!}}{\Wrappedafterbreak}{\hbox{\char`\!}}}% 
+            \lccode`\~`\/\lowercase{\def~}{\discretionary{\hbox{\char`\/}}{\Wrappedafterbreak}{\hbox{\char`\/}}}% 
+            \catcode`\.\active
+            \catcode`\,\active 
+            \catcode`\;\active
+            \catcode`\:\active
+            \catcode`\?\active
+            \catcode`\!\active
+            \catcode`\/\active 
+            \lccode`\~`\~ 	
+        }
+    \makeatother
+
+    \let\OriginalVerbatim=\Verbatim
+    \makeatletter
+    \renewcommand{\Verbatim}[1][1]{%
+        %\parskip\z@skip
+        \sbox\Wrappedcontinuationbox {\Wrappedcontinuationsymbol}%
+        \sbox\Wrappedvisiblespacebox {\FV@SetupFont\Wrappedvisiblespace}%
+        \def\FancyVerbFormatLine ##1{\hsize\linewidth
+            \vtop{\raggedright\hyphenpenalty\z@\exhyphenpenalty\z@
+                \doublehyphendemerits\z@\finalhyphendemerits\z@
+                \strut ##1\strut}%
+        }%
+        % If the linebreak is at a space, the latter will be displayed as visible
+        % space at end of first line, and a continuation symbol starts next line.
+        % Stretch/shrink are however usually zero for typewriter font.
+        \def\FV@Space {%
+            \nobreak\hskip\z@ plus\fontdimen3\font minus\fontdimen4\font
+            \discretionary{\copy\Wrappedvisiblespacebox}{\Wrappedafterbreak}
+            {\kern\fontdimen2\font}%
+        }%
+        
+        % Allow breaks at special characters using \PYG... macros.
+        \Wrappedbreaksatspecials
+        % Breaks at punctuation characters . , ; ? ! and / need catcode=\active 	
+        \OriginalVerbatim[#1,codes*=\Wrappedbreaksatpunct]%
+    }
+    \makeatother
+
+    % Exact colors from NB
+    \definecolor{incolor}{HTML}{303F9F}
+    \definecolor{outcolor}{HTML}{D84315}
+    \definecolor{cellborder}{HTML}{CFCFCF}
+    \definecolor{cellbackground}{HTML}{F7F7F7}
+    
+    % prompt
+    \makeatletter
+    \newcommand{\boxspacing}{\kern\kvtcb@left@rule\kern\kvtcb@boxsep}
+    \makeatother
+    \newcommand{\prompt}[4]{
+        \ttfamily\llap{{\color{#2}[#3]:\hspace{3pt}#4}}\vspace{-\baselineskip}
+    }
+    
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+%%%%%%% PACKAGES (pode ser necessário acrescentar mais, dependendo do que se pretender inserir no documento) %%%%%%%
+\usepackage[utf8]{inputenc}
+\usepackage[portuges,portuguese]{babel} % para podermos escrever em português
+
+
+% para que o índice possa ter o título de ``Índice'' (caso contrário fica ``Conteúdo'')
+\addto\captionsportuguese{% Replace "english" with the language you use
+  \renewcommand{\contentsname}%
+    {Índice}%
+}
+\usepackage[nottoc,notlot,notlof]{tocbibind}
+
+% para a inclusão de figuras
+\usepackage{graphicx}
+
+% para que não haja indentação no início dos parágrafos
+\setlength{\parindent}{0pt} 
+
+% para que os links apareçam como hiperligações
+\usepackage{url}
+\usepackage{hyperref}
+
+\usepackage[usenames,dvipsnames]{color}    
+%para introduzirmos fragmentos de script de R (ou de outra linguagem de programação)
+\usepackage{listings} %para inserir excertos de codigo
+
+\usepackage{subfigure} %Para incluir figuras lado a lado
+
+\newcommand*{\authorimg}[1]{\raisebox{-.0\baselineskip}{\includegraphics[height=12pt,width=12pt,keepaspectratio,]{#1}}} %Para inserir o símbolo do R
+
+\lstset{ 
+  language=R,                     % linguagem
+  basicstyle=\small\ttfamily, % tamanho das fontes usadas
+  numbers=left,                   % onde colocar numeração das linhas de código
+ numberstyle=\tiny\color{blue},  % estilo a usar para numeração das linhas
+  stepnumber=1,                   % distância entre duas linhas numeradas (se for 1, cada linha será numerada)
+  numbersep=5pt,                  % distância a que a numeração das linhas está do código
+  backgroundcolor=\color{white},  % cor do background
+  showspaces=false,               
+  showstringspaces=false,         % sublinhar espaços em strings
+  showtabs=false,                
+  frame=single,                   % coloca uma moldura à volta do código
+  rulecolor=\color{black},        % cor do frame
+  tabsize=2,                    
+  captionpos=b,                   % posição da legenda
+  breaklines=true,                % line breaking automático
+  breakatwhitespace=false,        
+  keywordstyle=\color{RoyalBlue},      % estilo das keywords
+  commentstyle=\color{YellowGreen},   % estilo dos comentários
+  stringstyle=\color{ForestGreen}      % estilo das strings
+} 
+
+
+\begin{document}
+    
+\thispagestyle{empty}
+% CAPA
+\begin{flushleft}
+\includegraphics[scale=0.2]{ESTB.jpg}
+\end{flushleft}
+
+\newline
+
+\begin{center}
+\Large{Instituto Politécnico de Setúbal}
+\end{center}
+
+\begin{center}
+\Large{Escola Superior de Tecnologia do Barreiro}
+\end{center}
+
+\medskip % para dar um espaço vertical
+
+
+\begin{center}
+\Large{\textbf{Projeto de ``Big Data''}}
+\end{center}
+\begin{center}
+\Large{Licenciatura em Bioinformática}
+\end{center}
+
+\vspace{3cm} % espaço vertical (uma alternativa ao \medskip, que pode ser customizada para efeitos estéticos)
+
+\begin{center}
+\huge{\textbf{Absenteísmo no Trabalho}} 
+\end{center}
+
+
+\begin{center}
+\Large{Janeiro de 2023}
+\end{center}
+
+\vspace{2cm}
+
+\medskip
+\begin{center}
+
+\large{Marine Fournier Nº202000224}
+
+\large{Guilherme Silva Nº202000178}
+
+\large{Gonçalo Alves Nº202000170}
+
+\end{center}   
+
+\pagebreak 
+
+\newpage
+\pagenumbering{roman}
+%\phantomsection
+
+% Página com o índice
+\tableofcontents
+\listoffigures
+
+\newpage
+\pagenumbering{arabic}
+
+
+    \hypertarget{introduuxe7uxe3o}{%
+\section{Introdução}\label{introduuxe7uxe3o}}
+
+    \hypertarget{objetivos-e-fundamentos-do-projeto}{%
+\subsection{Objetivos e Fundamentos do
+projeto}\label{objetivos-e-fundamentos-do-projeto}}
+
+    \begin{itemize}
+\tightlist
+\item
+  Este projeto de Machine Learning usando o Spark tem como objetivo
+  utilizar técnicas de aprendizado automático para analisar grandes
+  conjuntos de dados e prever resultados importantes para um determinado
+  tema de dados.
+\item
+  O Spark é uma ferramenta poderosa que permite o processamento
+  distribuído de dados, o que é essencial quando se trata de lidar com
+  grandes volumes de informações.
+\item
+  Neste projeto, vamos utilizar o Spark para ler, limpar e preparar os
+  dados, aplicar técnicas de aprendizado automático, avaliar e ajustar
+  modelos e, finalmente, fazer previsões precisas e relevantes.
+\item
+  Além disso, vamos usar técnicas avançadas de análise para visualizar e
+  interpretar os resultados, a fim de obter insights valiosos e tomar
+  decisões informadas.
+\item
+  Este projeto é uma excelente oportunidade para aplicar e praticar
+  habilidades de Machine Learning em um ambiente de grande escala e de
+  alta performance.
+\end{itemize}
+
+    \hypertarget{introduuxe7uxe3o-do-dataset-em-uso}{%
+\subsection{Introdução do DataSet em
+uso}\label{introduuxe7uxe3o-do-dataset-em-uso}}
+
+    \begin{itemize}
+\tightlist
+\item
+  Este projeto de Machine Learning usa o Spark para analisar um conjuntoempresa
+  de dados sobre absentismo no trabalho.
+\item
+  O conjunto de dados inclui informações como as razões para ausência,
+  gastos de transporte, distância de residência para trabalho, tempo de
+  serviço, carga de trabalho, desempenho, educação, estado pessoal e
+  informações demográficas dos funcionários, bem como a duração do
+  absentismo.
+\item
+  O objetivo deste projeto é utilizar técnicas de aprendizado de máquina
+  para identificar padrões e tendências nos dados e prever a
+  probabilidade de absentismo no futuro.
+\item
+  Com base nas descobertas, pode-se tomar medidas para reduzir o
+  absentismo e melhorar o desempenho da empresa.
+
+\newline
+
+\item
+    Criar uma ``SparkSession'' - Para se trabalhar com dados no Spark, é
+    essencial criar uma SparkSession, este passo é fundamental e o primeiro
+    a ser realizado. Ela é responsável por gerenciar a configuração do
+    Spark, criar RDDs (Resilient Distributed Datasets) e DataFrames,
+    registar tabelas temporárias e gerenciar os recursos do cluster
+    utilizados.
+
+
+\item
+  A SparkSession é o ponto de partida para trabalhar com dados
+  estruturados e relacionais no Spark SQL, o módulo do Spark que fornece
+  suporte para essa funcionalidade. Ele permite que você execute
+  consultas SQL, manipule DataFrames e extraia metadados. Ele também
+  oferece acesso às bibliotecas de processamento de fluxo de dados (como
+  o DataFrame API e o SQL) e às bibliotecas de aprendizado de máquina
+  (como o MLlib) do Spark.
+\item
+  A SparkSession (criada usando SparkSession.builder) é uma classe
+  fundamental para trabalhar com dados no Spark, é através dela que é
+  possível configurar e gerenciar a sessão, estabelecer conexões com o
+  cluster, definir opções de configuração e gerenciar recursos como o
+  número de núcleos para usar e a quantidade de memória. É a porta de
+  entrada para trabalhar com dados estruturados e relacionais no Spark
+  SQL.
+\item
+  A configuração ``.config(''spark.memory.offHeap.enabled``)'' permite
+  habilitar o uso de memória fora da heap (off-heap). Quando essa
+  configuração é definida como ``true'', o Spark pode usar memória fora
+  do heap do JVM para armazenar os dados e realizar operações. Isso
+  permite que o Spark armazene e execute operações com mais dados, o que
+  pode melhorar o desempenho quando a memória disponível dentro da heap
+  não é suficiente.
+\item
+  A configuração ``.config(''spark.memory.offHeap.size``,''10g``)''
+  permite definir a quantidade de memória fora do heap (off-heap)
+  disponível para o Spark usar. Neste caso, o valor ``10g'' indica que o
+  Spark pode usar até 10 gigabytes de memória fora do heap. Esse valor
+  pode ser ajustado de acordo com o tamanho dos dados e as necessidades
+  do seu aplicativo para garantir o melhor desempenho possível.
+\end{itemize}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql} \PY{k+kn}{import} \PY{n}{SparkSession}
+\PY{k+kn}{import} \PY{n+nn}{findspark}
+
+\PY{n}{findspark}\PY{o}{.}\PY{n}{init}\PY{p}{(}\PY{p}{)}
+
+\PY{n}{spark} \PY{o}{=} \PY{n}{SparkSession}\PY{o}{.}\PY{n}{builder}\PY{o}{.}\PY{n}{appName}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Pyspark ProjetoBD}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PYZbs{}
+                    \PY{o}{.}\PY{n}{config}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{spark.memory.offHeap.enabled}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{true}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PYZbs{}
+                    \PY{o}{.}\PY{n}{config}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{spark.memory.offHeap.size}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{20g}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PYZbs{}
+                    \PY{o}{.}\PY{n}{getOrCreate}\PY{p}{(}\PY{p}{)}
+\PY{n}{spark}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+
+\end{tcolorbox}
+
+\textbf{''Data Visualization'' e Análise}
+
+\begin{itemize}
+\item
+  Primeiramente vamos tamanho e o tipo de dados do nosso Dataset.
+\item
+  Este passo era mais simples ser executado através do método shape, mas
+  como o não é suportado pelo PySpark DataFrame, no entanto, podemos
+  contar o número de linhas e colunas usando o método count() e
+  verificar o esquema (colunas e tipos de dados) do DataFrame usando o
+  método printSchema().
+\end{itemize}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Numero de Linhas:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n}{df}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Numero de Colunas:}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{n+nb}{len}\PY{p}{(}\PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{)}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Esquema do DataFrame: }\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{df}\PY{o}{.}\PY{n}{printSchema}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Numero de Linhas: 1481
+Numero de Colunas: 21
+Esquema do DataFrame:
+root
+ |-- ID: string (nullable = true)
+ |-- Reason for absence: string (nullable = true)
+ |-- Month of absence: string (nullable = true)
+ |-- Day of the week: string (nullable = true)
+ |-- Seasons: string (nullable = true)
+ |-- Transportation expense: string (nullable = true)
+ |-- Distance from Residence to Work: string (nullable = true)
+ |-- Service time: string (nullable = true)
+ |-- Age: string (nullable = true)
+ |-- Work load Average/day : string (nullable = true)
+ |-- Hit target: string (nullable = true)
+ |-- Disciplinary failure: string (nullable = true)
+ |-- Education: string (nullable = true)
+ |-- Son: string (nullable = true)
+ |-- Social drinker: string (nullable = true)
+ |-- Social smoker: string (nullable = true)
+ |-- Pet: string (nullable = true)
+ |-- Weight: string (nullable = true)
+ |-- Height: string (nullable = true)
+ |-- Body mass index: string (nullable = true)
+ |-- Absenteeism time in hours: string (nullable = true)
+
+    \end{Verbatim}
+
+    Resumindo: - O DataFrame tem 8891 linhas e 21 colunas. O esquema do
+DataFrame mostra que todas as colunas são do tipo string e são nullable
+(podem conter valores nulos). Algumas das colunas incluem ``ID'',
+``Reason for absence'', ``Month of absence'', ``Age'' e ``Absenteeism
+time in hours''.
+
+  
+Descrição das variáveis do DataFrame:
+
+\begin{itemize}
+\tightlist
+\item
+  ID: Identificador único para cada registo.
+\item
+  Razão para a ausência: Razão para a ausência do funcionário no
+  trabalho.
+\item
+  Mês da ausência: O mês em que o funcionário estava ausente.
+\item
+  Dia da semana: O dia da semana em que o funcionário estava ausente.
+\item
+  Estações: A estação do ano em que o funcionário estava ausente.
+\item
+  Despesas de transporte: As despesas de transporte incorridas pelo
+  funcionário ao viajar para o trabalho.
+\item
+  Distância da residência para o trabalho: A distância entre a
+  residência do funcionário e o local de trabalho.
+\item
+  Tempo de serviço: O período de tempo em que o funcionário está a
+  trabalhar na empresa.
+\item
+  Idade: A idade do funcionário.
+\item
+  Carga de trabalho média/dia: A carga de trabalho média do funcionário
+  por dia.
+\item
+  Alvo atingido: Se o funcionário atingiu ou não o alvo
+\item
+  Falha disciplinar: Se o funcionário cometeu alguma falha disciplinar
+  ou não.
+\item
+  Educação: O nível de educação do funcionário.
+\item
+  Filhos: O número de filhos que o funcionário tem.
+\item
+  Bebedor social: Se o funcionário bebe socialmente ou não.
+\item
+  Fumador social: Se o funcionário fuma socialmente ou não.
+\item
+  Animal de estimação: Se o funcionário tem algum animal de estimação ou
+  não.
+\item
+  Peso: O peso do funcionário.
+\item
+  Altura: A altura do funcionário.
+\item
+  Índice de massa corporal: O índice de massa corporal do funcionário.
+\item
+  Tempo de ausência em horas: O número de horas que o funcionário ficou
+  ausente.
+\end{itemize}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{drop}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{id}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{itemize}
+\tightlist
+\item
+  Removeu-se a coluna ID pois não é relevante para os algoritmos de
+  aprendizado de máquina.
+\end{itemize}
+
+    Perguntas ao DataSet:
+
+    1- Qual a dispersão dos pesos registados?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql}\PY{n+nn}{.}\PY{n+nn}{functions} \PY{k+kn}{import} \PY{n}{stddev}
+
+\PY{n}{df}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{agg}\PY{p}{(}\PY{n}{stddev}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Height}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++-------------------+
+|stddev\_samp(Height)|
++-------------------+
+|  6.032953957248968|
++-------------------+
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Neste caso, podemos ver que os valores da coluna ``Height'' variam
+  cerca de 6.03 unidades em relação à média.
+\end{itemize}
+
+2- Qual é a maior Distância do trabalho registada?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{createOrReplaceTempView}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{data}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{spark}\PY{o}{.}\PY{n}{sql}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{SELECT MAX(`Distance from Residence to Work`) FROM data}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++------------------------------------+
+|max(Distance from Residence to Work)|
++------------------------------------+
+|  Distance from Res 52              |
++------------------------------------+
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  A maior distância de residência para trabalho registada é de 52.
+\end{itemize}
+
+3- Qual é a soma da coluna ``Absenteeism time in hours'' para cada
+valor único na coluna ``Education''?
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql}\PY{n+nn}{.}\PY{n+nn}{functions} \PY{k+kn}{import} \PY{n+nb}{sum}
+
+
+\PY{n}{result} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{groupBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Education}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{agg}\PY{p}{(}\PY{n+nb}{sum}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Absenteeism time in hours}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{o}{.}\PY{n}{alias}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{sum\PYZus{}absenteeism}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\PY{n}{result} \PY{o}{=} \PY{n}{result}\PY{o}{.}\PY{n}{orderBy}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Education}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n}{result}\PY{o}{.}\PY{n}{show}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
++---------+---------------+
+|Education|sum\_absenteeism|
++---------+---------------+
+|        1|         8786.0|
+|        2|          588.0|
+|        3|          832.0|
+|        4|           42.0|
+|Education|           null|
++---------+---------------+
+
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Podemos ver que a educação de nível 3 tem uma soma de 416 horas de
+  absenteísmo, a educação de nível 1 tem uma soma de 4393 horas de
+  absenteísmo, a educação de nível 4 tem uma soma de 21 horas de
+  absenteísmo e a educação de nível 2 tem uma soma de 294 horas de
+  absenteísmo.
+\item
+  Ou seja, o Absenteeism time in hours praticamente diretamente
+  relacionado com o nivel de Educação, as pessoas com educação de nivel
+  1 ficam muito mais ausentes que os de nivel 4
+\end{itemize}
+
+Pré tratamento e Análise exploratória de dados
+
+Vamos então verificar a existencia de valores ausentes em cada
+coluna.
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} criar uma lista para armazenar o número de valores ausentes em cada coluna.}
+\PY{n}{missing\PYZus{}values} \PY{o}{=} \PY{p}{[}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} iterar através das colunas no conjunto de dados.}
+\PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+    \PY{n}{missing\PYZus{}values}\PY{o}{.}\PY{n}{append}\PY{p}{(}\PY{p}{(}\PY{n}{col}\PY{p}{,} \PY{n}{df}\PY{o}{.}\PY{n}{filter}\PY{p}{(}\PY{n}{df}\PY{p}{[}\PY{n}{col}\PY{p}{]}\PY{o}{.}\PY{n}{isNull}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} print os valores inexistentes}
+\PY{k}{for} \PY{n}{col}\PY{p}{,} \PY{n}{val} \PY{o+ow}{in} \PY{n}{missing\PYZus{}values}\PY{p}{:}
+    \PY{k}{if} \PY{n}{val} \PY{o}{==} \PY{l+m+mi}{0}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ : Nunhum missing values encontrado}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{)}
+    \PY{k}{else}\PY{p}{:}
+        \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ : }\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{ missing values}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{col}\PY{p}{,} \PY{n}{val}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Reason for absence : Nunhum missing values encontrado
+Month of absence : Nunhum missing values encontrado
+Day of the week : Nunhum missing values encontrado
+Seasons : Nunhum missing values encontrado
+Transportation expense : Nunhum missing values encontrado
+Distance from Residence to Work : Nunhum missing values encontrado
+Service time : Nunhum missing values encontrado
+Age : Nunhum missing values encontrado
+Work load Average/day  : Nunhum missing values encontrado
+Hit target : Nunhum missing values encontrado
+Disciplinary failure : Nunhum missing values encontrado
+Education : Nunhum missing values encontrado
+Son : Nunhum missing values encontrado
+Social drinker : Nunhum missing values encontrado
+Social smoker : Nunhum missing values encontrado
+Pet : Nunhum missing values encontrado
+Weight : Nunhum missing values encontrado
+Height : Nunhum missing values encontrado
+Body mass index : Nunhum missing values encontrado
+Absenteeism time in hours : Nunhum missing values encontrado
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Podemos então concluir que não existem missing values
+\end{itemize}
+
+    \hypertarget{transformauxe7uxe3o-dos-dados}{%
+\subsection{Transformação dos
+dados}\label{transformauxe7uxe3o-dos-dados}}
+
+    \hypertarget{verifiquar-os-tipos-de-dados-das-colunas.}{%
+\paragraph{Verifiquar os tipos de dados das
+colunas.}\label{verifiquar-os-tipos-de-dados-das-colunas.}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{dtypes}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[('Reason for absence', 'string'),
+ ('Month of absence', 'string'),
+ ('Day of the week', 'string'),
+ ('Seasons', 'string'),
+ ('Transportation expense', 'string'),
+ ('Distance from Residence to Work', 'string'),
+ ('Service time', 'string'),
+ ('Age', 'string'),
+ ('Work load Average/day ', 'string'),
+ ('Hit target', 'string'),
+ ('Disciplinary failure', 'string'),
+ ('Education', 'string'),
+ ('Son', 'string'),
+ ('Social drinker', 'string'),
+ ('Social smoker', 'string'),
+ ('Pet', 'string'),
+ ('Weight', 'string'),
+ ('Height', 'string'),
+ ('Body mass index', 'string'),
+ ('Absenteeism time in hours', 'string')]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{itemize}
+\tightlist
+\item
+  É possível observar que todas as colunas são do tipo ``string'', o que
+  pode precisar ser convertido para outro tipo de dado para melhorar a
+  análise e modelagem de Machine Learning.
+\end{itemize}
+
+    \hypertarget{vamos-entuxe3o-converter-tipo-de-dados-string-para-double-para-melhorar-a-anuxe1lise-e-modelagem-de-machine-learning.}{%
+\paragraph{Vamos então converter tipo de dados string para double para
+melhorar a análise e modelagem de Machine
+Learning.}\label{vamos-entuxe3o-converter-tipo-de-dados-string-para-double-para-melhorar-a-anuxe1lise-e-modelagem-de-machine-learning.}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{sql}\PY{n+nn}{.}\PY{n+nn}{functions} \PY{k+kn}{import} \PY{n}{col}
+\PY{k}{for} \PY{n}{column} \PY{o+ow}{in} \PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+    \PY{n}{df} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{withColumn}\PY{p}{(}\PY{n}{column}\PY{p}{,} \PY{n}{col}\PY{p}{(}\PY{n}{column}\PY{p}{)}\PY{o}{.}\PY{n}{cast}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{double}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{dtypes}
+\end{Verbatim}
+\end{tcolorbox}
+
+            \begin{tcolorbox}[breakable, size=fbox, boxrule=.5pt, pad at break*=1mm, opacityfill=0]
+\prompt{Out}{outcolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+[('Reason for absence', 'double'),
+ ('Month of absence', 'double'),
+ ('Day of the week', 'double'),
+ ('Seasons', 'double'),
+ ('Transportation expense', 'double'),
+ ('Distance from Residence to Work', 'double'),
+ ('Service time', 'double'),
+ ('Age', 'double'),
+ ('Work load Average/day ', 'double'),
+ ('Hit target', 'double'),
+ ('Disciplinary failure', 'double'),
+ ('Education', 'double'),
+ ('Son', 'double'),
+ ('Social drinker', 'double'),
+ ('Social smoker', 'double'),
+ ('Pet', 'double'),
+ ('Weight', 'double'),
+ ('Height', 'double'),
+ ('Body mass index', 'double'),
+ ('Absenteeism time in hours', 'double')]
+\end{Verbatim}
+\end{tcolorbox}
+        
+    \begin{itemize}
+\tightlist
+\item
+  Agora os dados podem ser manipulados e analisados com mais facilidade,
+  pois o tipo ``double'' permite operações matemáticas, ao contrário do
+  tipo ``string''. E também estão corretamente configurados para que os
+  algoritmos de Machine Learning funcionem corretamente.
+\end{itemize}
+
+    \hypertarget{verifica-as-estatuxedsticas-das-colunas-numuxe9ricas.}{%
+\subsection{As estatísticas das colunas
+numéricas.}\label{verifica-as-estatuxedsticas-das-colunas-numuxe9ricas.}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{df}\PY{o}{.}\PY{n}{describe}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{toPandas}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+
+\begin{itemize}
+\tightlist
+\item
+  É possível observar algumas informações gerais sobre cada coluna
+  numérica no dataframe. Por exemplo, podemos ver o número total de
+  entradas (count), a média, a desvio padrão, o valor mínimo e máximo.
+  Estas informações podem ser úteis para entender melhor a distribuição
+  dos dados e identificar possíveis outliers ou valores incomuns.
+\end{itemize}
+
+    \hypertarget{verifica-a-correlauxe7uxe3o-entre-as-colunas.}{%
+\subsection{Verifica a correlação entre as
+colunas.}\label{verifica-a-correlauxe7uxe3o-entre-as-colunas.}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{n}{corr} \PY{o}{=} \PY{n}{df}\PY{o}{.}\PY{n}{stat}\PY{o}{.}\PY{n}{corr}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Month of absence}\PY{l+s+s2}{\PYZdq{}}\PY{p}{,} \PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Transportation expense}\PY{l+s+s2}{\PYZdq{}}\PY{p}{)}
+\PY{n+nb}{print}\PY{p}{(}\PY{n}{corr}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+0.1409565418102948
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  A correlação varia entre -1 e 1, sendo que valores próximos a -1
+  indicam uma correlação negativa forte, valores próximos a 1 indicam
+  uma correlação positiva forte e valores próximos a 0 indicam ausência
+  de correlação.
+\item
+  Neste caso como output \textasciitilde{} 0.1423, o que indica uma
+  correlação fraca entre as duas colunas, não havendo realação entre os
+  valores da coluna ``Month of absence'' e da coluna ``Transportation
+  expense''.
+\end{itemize}
+
+    \hypertarget{verifica-o-nuxfamero-de-valores-uxfanicos-em-cada-coluna.}{%
+\subsection{Verifica o número de valores únicos em cada
+coluna.}\label{verifica-o-nuxfamero-de-valores-uxfanicos-em-cada-coluna.}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k}{for} \PY{n}{col} \PY{o+ow}{in} \PY{n}{df}\PY{o}{.}\PY{n}{columns}\PY{p}{:}
+    \PY{n+nb}{print}\PY{p}{(}\PY{l+s+s2}{\PYZdq{}}\PY{l+s+s2}{Unique values in column }\PY{l+s+s2}{\PYZsq{}}\PY{l+s+si}{\PYZob{}\PYZcb{}}\PY{l+s+s2}{\PYZsq{}}\PY{l+s+s2}{:}\PY{l+s+s2}{\PYZdq{}}\PY{o}{.}\PY{n}{format}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{p}{,} \PY{n}{df}\PY{o}{.}\PY{n}{select}\PY{p}{(}\PY{n}{col}\PY{p}{)}\PY{o}{.}\PY{n}{distinct}\PY{p}{(}\PY{p}{)}\PY{o}{.}\PY{n}{count}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Unique values in column 'Reason for absence': 28
+Unique values in column 'Month of absence': 14
+Unique values in column 'Day of the week': 6
+Unique values in column 'Seasons': 5
+Unique values in column 'Transportation expense': 25
+Unique values in column 'Distance from Residence to Work': 26
+Unique values in column 'Service time': 19
+Unique values in column 'Age': 23
+Unique values in column 'Work load Average/day ': 39
+Unique values in column 'Hit target': 14
+Unique values in column 'Disciplinary failure': 3
+Unique values in column 'Education': 5
+Unique values in column 'Son': 6
+Unique values in column 'Social drinker': 3
+Unique values in column 'Social smoker': 3
+Unique values in column 'Pet': 7
+Unique values in column 'Weight': 27
+Unique values in column 'Height': 15
+Unique values in column 'Body mass index': 18
+Unique values in column 'Absenteeism time in hours': 20
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Podemos então dizer que a coluna que tem mais valores unicos é a
+  ``Reason for absence'' (28), enquanto que a coluna que tem menos é a
+  ``Disciplinary failure'' (3).
+\item
+  Isto pode-nos ajudar a perceber a diversidade de valores em cada
+  coluna e identificar se alguma coluna precisa ser tratada de forma
+  diferente.
+\end{itemize}
+
+    \begin{itemize}
+\tightlist
+\item
+  Com este output podemos ver o nome de cada coluna e o número de
+  ocorrências para cada valor único. Isto permite uma visão geral dos
+  dados, incluindo a verificação de valores ausentes (null) e a
+  distribuição de valores para cada coluna.
+\item
+  A tabela ``Reason for absence'' apresenta a maior distribuição,
+  seguida por ``Month of absence'' e ``Day of the week''. Os valores
+  mais frequentes são ``Congenital malformations'', ``Diseases of the
+  eye'' e ``Diseases of the musculoskeletal system''.
+\end{itemize}
+
+\pagebreak
+
+\paragraph{Fig.1: Frequência de ausência de cada categoria de justificação.}
+
+\begin{figure}[h]
+   \includegraphics[scale=1.0]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_63_0.png}
+   \pagebreak
+    \caption{Figura 1: Gráfico de barras que mostra a frequência de ausência de cada categoria de justificação}
+    \pagebreak
+   \label{fig:barras1}
+\end{figure}
+
+    \begin{itemize}
+\tightlist
+\item
+  Esse gráfico mostra a frequência de ausência de cada categoria de
+  justificação. A partir daí, é possível ver facilmente qual é a razão
+  mais comum para a ausência que neste caso é ``Congenital
+  malformations, deformations and chromosomal abnormalities'', e também
+  comparar as frequências entre as diferentes razões. Também, pode-se
+  observar que a maioria das razões tem baixa frequencia, e que poucas
+  razões representam a maioria das ausencias.
+\end{itemize}
+
+    \hypertarget{gruxe1fico-que-mostra-a-relauxe7uxe3o-entre-transportation-expense-e-distance-from-residence-to-work}{%
+\paragraph{Fig.2: Gráfico que mostra a relação entre ``Transportation expense''
+e ``Distance from Residence to
+Work''}\label{gruxe1fico-que-mostra-a-relauxe7uxe3o-entre-transportation-expense-e-distance-from-residence-to-work}}
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_66_0.png}
+   \pagebreak
+    \caption{Figura 2: Gráfico de dispersão que mostra a relação entre os
+  gastos em transporte e a distância da residência para o trabalho.}
+    \pagebreak
+   \label{fig:dispresao}
+\end{figure}
+
+    \begin{itemize}
+\tightlist
+\item
+  Este gráfico é um gráfico de dispersão que mostra a relação entre os
+  gastos com transporte e a distância da residência para o trabalho. Ele
+  parece estar mostrando que, em geral, quanto maior a distância da
+  residência para o trabalho, maior os gastos com transporte. No
+  entanto, há algumas exceções, como alguns pontos que apresentam gastos
+  elevados com transporte mesmo com distâncias curtas. Este gráfico pode
+  ser útil para entender se existe alguma relação entre essas duas
+  variáveis e como elas podem afetar a saúde dos funcionários.
+\end{itemize}
+
+
+    \hypertarget{mostrar-a-distribuiuxe7uxe3o-de-idade-dos-funcionuxe1rios-que-estuxe3o-faltando}{%
+\paragraph{Fig.3: Mostrar a distribuição de idade dos funcionários que estão
+faltando}\label{mostrar-a-distribuiuxe7uxe3o-de-idade-dos-funcionuxe1rios-que-estuxe3o-faltando}}
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_69_0.png}
+   \pagebreak
+    \caption{Figura 3: Gráfico da distribuição de densidade dos
+  funcionários ausentes em relação a idade}
+    \pagebreak
+   \label{fig:densidade}
+\end{figure}
+    
+    \begin{itemize}
+\tightlist
+\item
+  Este gráfico mostra a distribuição de densidade da idade dos
+  funcionários ausentes. Ele mostra a frequência relativa de cada idade.
+\item
+  A grande maioria das pessoas ausentes estão na faixa etária entre 30 e
+  40 anos.
+\end{itemize}
+
+\pagebreak
+
+    \hypertarget{gruxe1ficos-histogramas-para-todas-as-colunas-numuxe9ricas-do-dataframe.}{%
+\paragraph{Fig.4: Gráficos histogramas para todas as colunas numéricas do
+dataframe.}\label{gruxe1ficos-histogramas-para-todas-as-colunas-numuxe9ricas-do-dataframe.}}
+
+São apresentadas, de seguida, as distribuições dos valores das features.
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_73_0.png}
+   \pagebreak
+    \caption{Figura 4: Gráficos histogramas para todas as colunas numéricas do
+dataframe.}
+    \pagebreak
+   \label{fig:histogramas}
+\end{figure}
+    
+    \hypertarget{explicauxe7uxe3o-dos-histogramas}{%
+\subparagraph{Explicação dos
+histogramas:}\label{explicauxe7uxe3o-dos-histogramas}}
+
+    \begin{itemize}
+\tightlist
+\item
+  Estes histogramas permitem-nos ver a distribuição dos dados para cada
+  coluna numérica e identificar tendências ou outliers. A partir do
+  gráfico é possível ver a distribuição de frequencia para cada coluna
+  numérica.
+\item
+  O eixo do x mostra os valores possíveis de cada feature, enquanto o
+  eixo do y mostra a frequência com que esses valores aparecem no
+  conjunto de dados, isto permite-nos identificar a distribuição dos
+  dados e verificar se existem outliers ou valores incomuns.
+\end{itemize}
+
+    \hypertarget{anuxe1lise-dos-histogramas}{%
+\subparagraph{Análise dos
+histogramas:}\label{anuxe1lise-dos-histogramas}}
+
+    \begin{itemize}
+\tightlist
+\item
+  A coluna ``Age'' apresenta uma distribuição relativamente normal, com
+  a maioria dos valores concentrados entre 20 e 40 anos de idade.
+\item
+  A coluna ``Work load Average/day'' apresenta valores concentrados
+  entre cerca de 200 e 250, com poucos valores fora desse intervalo.
+\item
+  A coluna ``Hit target'' tem a maioria dos valores acima de 90,
+  indicando que a maioria dos funcionários atingem suas metas.
+\item
+  A coluna ``Disciplinary failure'' tem a maioria dos valores em zero,
+  indicando que a maioria dos funcionários não tem falhas disciplinares.
+\item
+  A coluna ``Education'' tem a maioria dos valores em 1, indicando que a
+  maioria dos funcionários tem educação de nível básico.
+\item
+  A coluna ``Son'' tem valores distribuídos principalmente entre 0 e 4,
+  indicando que a maioria dos funcionários tem entre 0 e 4 filhos.
+\item
+  A coluna ``Social drinker'' e ``Social smoker'' tem a maioria dos
+  valores em 0, indicando que a maioria dos funcionários não são
+  bebedores sociais ou fumantes sociais.
+\item
+  A coluna ``Pet'' tem valores distribuídos principalmente entre 0 e 2,
+  indicando que a maioria dos funcionários tem entre 0 e 2 animais de
+  estimação.
+\item
+  A coluna ``Weight'' tem valores distribuídos principalmente entre 60 e
+  100, indicando que a maioria dos funcionários pesam entre 60 e 100 kg.
+\item
+  A coluna ``Height'' tem valores distribuídos principalmente entre 160
+  e 180, indicando que a maioria dos funcionários tem entre 160 e 180 cm
+  de altura.
+\item
+  A coluna ``Body mass index'' tem valores distribuídos principalmente
+  entre 20 e 30, indicando que a maioria dos funcionários tem índice de
+  massa corporal saudável.
+\item
+  A coluna ``Absenteeism time in hours'' tem valores distribuídos
+  principalmente entre 0 e 20, indicando que a maioria dos funcionários
+  tem entre 0 e 20 horas de ausência.
+\end{itemize}
+\pagebreak
+    \hypertarget{gruxe1ficos-box-plot}{%
+\subparagraph{Fig.5 e 6: Gráficos box plot}\label{gruxe1ficos-box-plot}}
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.8]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_79_3.png}
+   \pagebreak
+    \caption{Figura 5: Box plot "Transportation expense"}
+    \pagebreak
+   \label{fig:boxplot1}
+\end{figure}
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.8]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_79_6.png}
+   \pagebreak
+    \caption{Figura 6: Box plot "Age"}
+    \pagebreak
+   \label{fig:boxplot2}
+\end{figure}
+
+    \begin{itemize}
+\tightlist
+\item
+  Os gráficos box plot mostram a distribuição de dados numéricos e
+  fornecem informações sobre a mediana, a variação e outliers dos dados.
+  A ``caixa'' representa o intervalo interquartil (entre o primeiro e o
+  terceiro quartil), ou seja, onde se encontra 50\% dos dados. A linha
+  no meio da caixa representa a mediana (valor do meio). Os outliers são
+  representados por pontos fora do intervalo de linhas.
+\item
+  Analisando supreficialmente alguns box plot podemos ver que no caso da
+  coluna ``Age'', existe uma distribuição relativamente normal, com a
+  maioria dos valores entre 20 e 40 anos, enquanto na coluna
+  ``Transportation expense'' existem alguns valores outliers muito
+  altos.
+\end{itemize}
+
+    \hypertarget{algoritmos-de-machine-learning}{%
+\section{Algoritmos de Machine
+Learning}\label{algoritmos-de-machine-learning}}
+
+    \hypertarget{preparauxe7uxe3o-para-algoritmos-de-regressuxe3o}{%
+\subsection{Preparação para Algoritmos de
+Regressão}\label{preparauxe7uxe3o-para-algoritmos-de-regressuxe3o}}
+        
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml}\PY{n+nn}{.}\PY{n+nn}{feature} \PY{k+kn}{import} \PY{n}{VectorAssembler}\PY{p}{,} \PY{n}{StandardScaler}
+\PY{k+kn}{from} \PY{n+nn}{pyspark}\PY{n+nn}{.}\PY{n+nn}{ml}\PY{n+nn}{.}\PY{n+nn}{regression} \PY{k+kn}{import} \PY{n}{LinearRegression}
+
+\PY{c+c1}{\PYZsh{} Selecione as colunas independentes}
+\PY{n}{independent\PYZus{}cols} \PY{o}{=} \PY{p}{[}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Month of absence}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Day of the week}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Seasons}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Transportation expense}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Distance from Residence to Work}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Service time}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Age}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Work load Average/day }\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Hit target}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Disciplinary failure}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Education}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Son}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Social drinker}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Social smoker}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Pet}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Weight}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Height}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,}
+ \PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{Absenteeism time in hours}\PY{l+s+s1}{\PYZsq{}}\PY{p}{]}
+
+\PY{c+c1}{\PYZsh{} Crie o objeto VectorAssembler}
+\PY{n}{assembler} \PY{o}{=} \PY{n}{VectorAssembler}\PY{p}{(}\PY{n}{inputCols}\PY{o}{=}\PY{n}{independent\PYZus{}cols}\PY{p}{,} \PY{n}{outputCol}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Aplique o assembler no DataFrame}
+\PY{n}{df\PYZus{}assembled} \PY{o}{=} \PY{n}{assembler}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{df}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Dividir os dados em conjunto de treinamento e teste}
+\PY{n}{train}\PY{p}{,} \PY{n}{test} \PY{o}{=} \PY{n}{df\PYZus{}assembled}\PY{o}{.}\PY{n}{randomSplit}\PY{p}{(}\PY{p}{[}\PY{l+m+mf}{0.7}\PY{p}{,} \PY{l+m+mf}{0.3}\PY{p}{]}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{itemize}
+\tightlist
+\item
+  Este passo está a selecionar as colunas independentes (colunas que
+  serão usadas como variáveis ​​preditivas) para serem usadas na
+  modelagem de regressão linear.
+\item
+  Criasse um objeto VectorAssembler, que é usado para combinar as
+  colunas selecionadas em uma única coluna chamada ``features''. Este
+  objeto é então aplicado ao DataFrame para produzir um novo DataFrame
+  com uma coluna ``features'' que contém todas as variáveis
+  ​​selecionadas.
+\item
+  Por fim, os dados são divididos em um conjunto de treinamento (70\%) e
+  um conjunto de teste (30\%).
+\end{itemize}
+
+    \hypertarget{standarizar-os-dados-em-train-e-test}{%
+\paragraph{Standarizar os dados em train e
+test}\label{standarizar-os-dados-em-train-e-test}}
+
+    \begin{tcolorbox}[breakable, size=fbox, boxrule=1pt, pad at break*=1mm,colback=cellbackground, colframe=cellborder]
+\prompt{In}{incolor}{ }{\boxspacing}
+\begin{Verbatim}[commandchars=\\\{\}]
+\PY{c+c1}{\PYZsh{} Criar objeto StandardScaler}
+\PY{n}{scaler} \PY{o}{=} \PY{n}{StandardScaler}\PY{p}{(}\PY{n}{inputCol}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{,} \PY{n}{outputCol}\PY{o}{=}\PY{l+s+s1}{\PYZsq{}}\PY{l+s+s1}{standard\PYZus{}features}\PY{l+s+s1}{\PYZsq{}}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Aplique o scaler no conjunto de treinamento}
+\PY{n}{scalerModel} \PY{o}{=} \PY{n}{scaler}\PY{o}{.}\PY{n}{fit}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Aplique o scaler no conjunto de treinamento}
+\PY{n}{train} \PY{o}{=} \PY{n}{scalerModel}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{train}\PY{p}{)}
+
+\PY{c+c1}{\PYZsh{} Aplique o scaler no conjunto de teste}
+\PY{n}{test} \PY{o}{=} \PY{n}{scalerModel}\PY{o}{.}\PY{n}{transform}\PY{p}{(}\PY{n}{test}\PY{p}{)}
+\end{Verbatim}
+\end{tcolorbox}
+
+    \begin{itemize}
+\tightlist
+\item
+  Transforma as colunas `features' em `standard\_features', normalizando
+  os valores dessas colunas para terem média 0 e desvio padrão 1.
+\item
+  Mostra os 2 primeiros registros das colunas `standard\_features' do
+  conjunto de treinamento e teste, para que se você possa ver como os
+  valores foram alterados.
+\end{itemize}
+
+    \hypertarget{regressuxe3o-linear}{%
+\subsection{Regressão Linear}\label{regressuxe3o-linear}}
+
+    \begin{itemize}
+\tightlist
+\item
+  A regressão linear é um dos algoritmos de aprendizado supervisionado
+  mais simples e comuns utilizados para resolver problemas de previsão.
+\item
+  O objetivo é encontrar uma linha que melhor se ajuste aos dados, de
+  forma a prever um valor de saída (variável dependente) com base em um
+  ou mais valores de entrada (variáveis independentes).
+\item
+  A regressão linear é frequentemente utilizada para prever tendências
+  futuras, identificar relações causais entre variáveis e para avaliar o
+  impacto de uma ou mais variáveis independentes sobre uma variável
+  dependente.
+\item
+  Em relação ao nosso DataSet é adequado usar Regressão Linear, pois
+  podemos esperar uma relação direta entre as variáveis independentes e
+  a variável dependente ``Body mass index''.
+\end{itemize}
+Elaboração do Modelo
+
+    \begin{itemize}
+\tightlist
+\item
+  Definição de cada variável (dependente e independente)
+\item
+  Treinar o modelo com os dados de treinamento. As previsões são feitas
+  com os dados de teste usando o método ``transform'' do modelo
+  treinado.
+\end{itemize}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Score:  0.6778241980124795
+R2 = 0.994877
+Root Mean Squared Error (RMSE) on test data = 0.322176
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Calculamos o Mean Squared Error (MSE), o Root Mean Squared Error
+  (RMSE) e o score para avaliar a preformance do modelo.
+\item
+  A partir dos valores de score e rmse é possível concluir que o modelo
+  tem uma precisão de 66.14\% e um erro médio quadrático de 0.33. Isso
+  significa que o modelo tem uma boa capacidade de prever o índice de
+  massa corporal dos funcionários, mas ainda tem um certo grau de
+  incerteza.
+\end{itemize}
+
+    \hypertarget{matriz-de-confusuxe3o}{%
+\paragraph{Matriz de Confusão?}\label{matriz-de-confusuxe3o}}
+
+    \begin{itemize}
+\tightlist
+\item
+  A matriz de confusão é uma tabela que mostra quantas previsões foram
+  corretas e incorretas para cada classe. A diagonal principal contém as
+  previsões corretas e as outras células contêm as previsões incorretas.
+\item
+  Criar uma matriz de confusão para um problema de regressão não faz
+  sentido. A matriz de confusão é uma forma de avaliar o desempenho de
+  um modelo de classificação, mas em problemas de regressão, as métricas
+  de avaliação são diferentes, como Erro Quadrático Médio (MSE), Raiz do
+  Erro Quadrático Médio (RMSE), Erro Absoluto Médio (MAE), entre outros.
+\end{itemize}
+
+    \hypertarget{gruxe1fico-de-regressuxe3o-linear}{%
+\paragraph{Fig.7: Gráfico de Regressão
+Linear}\label{gruxe1fico-de-regressuxe3o-linear}}
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_107_0.png}
+   \pagebreak
+    \caption{Figura 7: Gráfico de Regressão Linear}
+    \pagebreak
+   \label{fig:RegressãoLinear}
+\end{figure}
+
+    
+    \begin{itemize}
+\tightlist
+\item
+  Este gráfico mostra o resultado da regressão linear, onde cada ponto
+  representa uma previsão feita pelo modelo para um determinado valor
+  real.
+\item
+  Pode-se observar que a maioria dos pontos estão concentrados em torno
+  da diagonal do gráfico, indicando que o modelo está fazendo previsões
+  razoavelmente precisas.
+\item
+  Podemos ver a partir do gráfico que há uma certa correlação entre os
+  valores previstos e os valores reais, mas também há alguns pontos que
+  estão fora do normal, indicando que o modelo comete erros de previsão.
+  Além disso, o valor de RMSE obtido foi de aproximadamente 0,34, o que
+  é considerado um valor aceitável para um modelo de previsão. Portanto,
+  podemos concluir que o modelo de regressão linear pode ser utilizado
+  como um modelo de previsão de confiança, mas é importante considerar
+  que ele pode cometer alguns erros.
+\end{itemize}
+
+    \hypertarget{uxe1rvore-de-regressuxe3o}{%
+\subsection{Árvore de Regressão}\label{uxe1rvore-de-regressuxe3o}}
+
+    \hypertarget{vantagens-do-uso-de-uxe1rvores-de-regressuxe3o}{%
+\paragraph{Vantagens do uso de Árvores de
+Regressão}\label{vantagens-do-uso-de-uxe1rvores-de-regressuxe3o}}
+
+    \begin{itemize}
+\tightlist
+\item
+  Facilidade de interpretação: Árvores de regressão são fáceis de
+  entender e interpretar, pois mostram claramente as relações entre as
+  variáveis de entrada e a variável de saída.
+\item
+  Não requer normalização: As árvores de regressão não requerem que os
+  dados sejam normalizados antes do treinamento, o que é útil se os
+  dados tiverem escalas diferentes.
+\item
+  Não afetado por outliers: As árvores de regressão são menos afetadas
+  por outliers do que outros algoritmos de regressão, como a regressão
+  linear.
+\item
+  Pode ser usado para problemas de classificação e regressão: As árvores
+  de regressão podem ser usadas para resolver problemas tanto de
+  classificação quanto de regressão.
+\end{itemize}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Score:  0.8481817366609425
+R2 = 0.998862
+Root Mean Squared Error (RMSE) on test data = 0.151818
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  Pode-se concluir que o modelo tem uma alta precisão, pois o R² é
+  próximo de 1, o que indica que a maioria dos dados estão perto da
+  linha de tendência prevista pelo modelo.
+\item
+  O RMSE é relativamente baixo, indicando que a diferença entre os
+  valores previstos e os valores reais são pequenas.
+\item
+  O Score mostra a porcentagem de acerto do modelo, no caso o valor é de
+  84,8\%.
+\end{itemize}
+
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_116_0.png}
+   \pagebreak
+    \caption{Figura 8: scatter plot entre os "Predicted values"e "Actuel Values" da Árvore de Regressão}
+    \pagebreak
+   \label{fig:scatter plot1}
+\end{figure}
+
+    
+    \begin{itemize}
+\tightlist
+\item
+  Este gráfico mostra uma dispersão entre os valores previstos pelo
+  modelo (eixo x) e os valores reais (eixo y) para o índice de massa
+  corporal.
+\item
+  Pode-se ver que a maioria dos pontos estão próximos da diagonal, o que
+  indica que o modelo está fazendo previsões precisas.
+\item
+  No entanto, há alguns pontos que estão mal previstos, o que significa
+  que o modelo está tendo dificuldade para prever esses valores.
+\item
+  O R2 = 0.998862 e o RMSE = 0.151818 o que significa que o modelo tem
+  uma boa precisão.
+\end{itemize}
+
+    \hypertarget{random-forest}{%
+\subsection{Random Forest}\label{random-forest}}
+
+Porque usar Random Forest
+
+    \begin{itemize}
+\tightlist
+\item
+  Random Forest é um algoritmo de aprendizado de máquina supervisionado
+  que pode ser utilizado tanto para classificação quanto para regressão.
+\item
+  Ele funciona criando várias árvores de decisão, e utilizando a média
+  das previsões das árvores para fazer uma previsão final.
+\item
+  Isso ajuda a reduzir o overfitting, pois as árvores individuais tendem
+  a se ajustar muito bem aos dados de treinamento, mas juntas elas
+  funcionam de forma mais robusta.
+\item
+  Além disso, o Random Forest também tem a vantagem de ser capaz de
+  lidar com múltiplas variáveis e features categóricas sem a necessidade
+  de codificação.
+\item
+  Estas propriedades tornam o Random Forest uma escolha popular para
+  muitos problemas de aprendizado de máquina.
+\item
+  Vamos então usar o Random forest para fazer uma previsão dos valores
+  de ``Body mass index''
+\end{itemize}
+Elaboração do modelo
+    \begin{itemize}
+\tightlist
+\item
+  Criação do modelo de Random Forest para prever o índice de massa
+  corporal (coluna ``Body mass index'') com base nas colunas numéricas
+  (colunas ``numerical\_cols'') dos dados.
+\item
+  É então usado o objeto VectorAssembler para agrupar essas colunas em
+  um único vetor chamado ``standard\_features''.
+\item
+  Os dados são então divididos em conjuntos de treinamento e teste (70\%
+  treinamento e 30\% teste) e o modelo é treinado com os dados de
+  treinamento.
+\end{itemize}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Score:  0.8325173179713301
+R2 = 0.998374
+Root Mean Squared Error (RMSE) on test data = 0.167483
+    \end{Verbatim}
+
+    \begin{itemize}
+\tightlist
+\item
+  A partir do output apresentado, pode-se concluir que o modelo de
+  random forest tem uma boa capacidade de previsão, pois o valor R² é
+  próximo de 1 e indica que a maior parte da variação dos valores alvo é
+  explicada pelo modelo.
+\item
+  Além disso, o erro médio quadrático raiz (RMSE) é relativamente baixo,
+  o que também indica que as previsões são precisas.
+\end{itemize}
+
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_125_0.png}
+   \pagebreak
+    \caption{Figura 9: Scatter plot entre os "Predicted values"e "Actuel Values" da Random Forest}
+    \pagebreak
+   \label{fig:scatterPlot2}
+\end{figure}
+    
+    \begin{itemize}
+\tightlist
+\item
+  Este gráfico apresenta uma dispersão dos valores previstos pelo modelo
+  (eixo x) em relação aos valores reais (eixo y). Também sendo possível
+  observar o quão precisas foram as previsões do modelo.
+\item
+  Uma boa precisão seria representada por pontos que seguem a diagonal,
+  indicando que os valores previstos estão próximos dos valores reais.
+\item
+  Além disso, também é possível observar que o modelo apresenta alguns
+  valores previstos maiores ou menores do que os valores reais.
+\item
+  O modelo é capaz de prever com precisão o índice de massa corporal, no
+  entanto o mesmo apresenta algum erro, portanto seria necessário fazer
+  mais análise e testes para determinar se o modelo é confiável o
+  suficiente para ser usado em uma aplicação real.
+\end{itemize}
+
+    \hypertarget{conclusuxe3o}{%
+\section{Conclusão}\label{conclusuxe3o}}
+
+    \begin{itemize}
+\tightlist
+\item
+O objetivo de usar algoritmos de Machine Learning em conjuntos de dados é automatizar a descoberta de padrões e tendências nos dados. Isso pode ser usado para prever resultados futuros, identificar relações entre variáveis e tomar decisões automatizadas baseadas em dados. Além disso, os algoritmos de Machine Learning podem ser usados para melhorar a eficiência e precisão de processos existentes e para aumentar a capacidade de um sistema de lidar com grandes volumes de dados.
+No contexto deste projeto, o Spark foi usado para carregar, preparar e processar os dados, bem como para treinar e avaliar modelos de aprendizado de máquina usando técnicas de regressão, como árvore de decisão e random forest. Além disso, o Spark também foi usado para realizar consultas SQL e agregações para explorar e entender melhor os dados.
+\newline
+\item
+Foram utilizadas técnicas de processamento de dados, análise exploratória e modelagem de Machine Learning. Os dados foram limpos e preparados para o treinamento de modelos de previsão, incluindo árvore de decisão, random forest e regressão linear.
+Depois de comparar todos os algoritmos de Machine Learning concluimos que todos os modelos apresentaram resultados razoáveis, mas o modelo de random forest obteve o melhor desempenho com um R2 de 0.998374 e um RMSE de 0.167483. A análise gráfica também apontou uma boa relação entre os valores previstos e os valores reais. Em geral, pode-se concluir que este projeto foi capaz de prever o IMC (Variável usada em todos os algoritmos de previsão) com boa precisão utilizando técnicas de Machine Learning e fornecer uma compreensão mais profunda dos dados.
+\newline
+\item
+Foram encontradas algumas dificuldades ao longo deste projeto, tais como: 
+\newline Preparação dos dados (limpeza, manipulação e normalização dos dados), otimização de desempenho e interpretação dos resultados.
+Durante o projeto, tivemos que lidar com a limpeza e preparação dos dados, como a conversão de colunas de String para tipos numéricos, para que fossem adequados para a aplicação de algoritmos de regressão.
+Devido a essa conversão dos tipos de dados, foi necessário restringir a utilização dos algoritmos para apenas regressão, o que limitou as possibilidades de análise dos dados e, portanto, a capacidade de tirar conclusões mais completas sobre o conjunto de dados.
+\end{itemize}
+
+%%% Bibliografia
+\pagebreak
+\begin{thebibliography}{}
+
+\bibitem{Chambers_2019}
+Chambers, B., & Zaharia, M. (2019). Spark: The Definitive Guide. O'Reilly Media, Inc.
+
+\bibitem{Ryza_2019}
+Ryza, S., Laserson, U., Owen, S., & Wills, J. (2019). Advanced Analytics with Spark. O'Reilly Media, Inc.
+
+\bibitem{Raschka_2015}
+Raschka, S., & Mirjalili, V. (2015). Python Machine Learning. Packt Publishing Ltd.
+
+\bibitem{Pentreath_2015}
+Pentreath, N. (2015). Machine Learning with Spark. Packt Publishing Ltd.
+
+\bibitem{Thottuvaikkatumana_2019}
+Thottuvaikkatumana, R. (2019). Spark for Python Developers. Packt Publishing Ltd.
+
+\bibitem{Zinoviev_2017}
+Zinoviev, D. (2017). Big Data Analysis with Python. Packt Publishing Ltd.
+
+\bibitem{VanderPlas_2016}
+VanderPlas, J. (2016). Python Data Science Handbook. O'Reilly Media, Inc.
+
+\bibitem{Grus_2015}
+Grus, J. (2015). Data Science from Scratch. O'Reilly Media, Inc.
+
+\bibitem{Provost_2013}
+Provost, F., & Fawcett, T. (2013). Data Science for Business. O'Reilly Media, Inc.
+
+\bibitem{Muller_2016}
+Müller, A., & Guido, S. (2016). Introduction to Machine Learning with Python. O'Reilly Media, Inc.
+
+\end{document}
