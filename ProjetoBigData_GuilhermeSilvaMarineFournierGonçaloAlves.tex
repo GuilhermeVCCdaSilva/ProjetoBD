@@ -1369,6 +1369,35 @@ test}\label{standarizar-os-dados-em-train-e-test}}
   valores foram alterados.
 \end{itemize}
 
+    \hypertarget{k-means}{%
+\subsection{K-means}\label{K-means}}
+    \begin{itemize}
+\tightlist
+\item
+K-means é um algoritmo fácil de entender e implementar, sendo muito utilizado em grandes conjuntos de dados.
+\item
+"Custo WCSS" é uma medida da similaridade entre os pontos de dados dentro de um cluster.
+O objetivo é minimizar o WCSS, pois representa a soma das distâncias ao quadrado entre cada ponto de dados e o centroide de seu cluster.
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=1.2]{kmeans02.png}
+   \pagebreak
+    \caption{Figura 7: K-means}
+    \pagebreak
+   \label{fig:kmeans02}
+\end{figure}
+
+\pagebreak
+\item
+O Elbow Method é uma técnica utilizada para determinar o número ótimo de clusters através do WCSS.
+A ideia é que à medida que o número de clusters aumenta, o WCSS diminui, mas a dado momento esta diminuição pode não ser significativa para justificar a adição de mais clusters.
+\item
+Depois de analisar o gráfico Elbow, podemos concluir que o ponto ótimo para o número de clusters é k=6.
+Isso significa que, a partir de 6 clusters, a taxa de variação do WCSS começa a diminuir significativamente, indicando que adicionar mais clusters não trará grandes benefícios em termos de agrupamento.
+\end{itemize}
+
+
     \hypertarget{regressuxe3o-linear}{%
 \subsection{Regressão Linear}\label{regressuxe3o-linear}}
 
@@ -1441,14 +1470,14 @@ Root Mean Squared Error (RMSE) on test data = 0.322176
 \end{itemize}
 
     \hypertarget{gruxe1fico-de-regressuxe3o-linear}{%
-\paragraph{Fig.7: Gráfico de Regressão
+\paragraph{Fig.8: Gráfico de Regressão
 Linear}\label{gruxe1fico-de-regressuxe3o-linear}}
 
 \begin{figure}[h]
    \centering
    \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_107_0.png}
    \pagebreak
-    \caption{Figura 7: Gráfico de Regressão Linear}
+    \caption{Figura 8: Gráfico de Regressão Linear}
     \pagebreak
    \label{fig:RegressãoLinear}
 \end{figure}
@@ -1528,7 +1557,7 @@ Root Mean Squared Error (RMSE) on test data = 0.151818
    \centering
    \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_116_0.png}
    \pagebreak
-    \caption{Figura 8: scatter plot entre os "Predicted values"e "Actuel Values" da Árvore de Regressão}
+    \caption{Figura 9: scatter plot entre os "Predicted values" e "Actuel Values" da Árvore de Regressão}
     \pagebreak
    \label{fig:scatter plot1}
 \end{figure}
@@ -1618,7 +1647,7 @@ Root Mean Squared Error (RMSE) on test data = 0.167483
    \centering
    \includegraphics[scale=0.9]{ProjetoBigData_GuilhermeSilvaMarineFournieGonÃ§aloAlves_125_0.png}
    \pagebreak
-    \caption{Figura 9: Scatter plot entre os "Predicted values"e "Actuel Values" da Random Forest}
+    \caption{Figura 10: Scatter plot entre os "Predicted values" e "Actuel Values" da Random Forest}
     \pagebreak
    \label{fig:scatterPlot2}
 \end{figure}
@@ -1645,18 +1674,20 @@ Root Mean Squared Error (RMSE) on test data = 0.167483
     \hypertarget{conclusuxe3o}{%
 \section{Conclusão}\label{conclusuxe3o}}
 
-    \begin{itemize}
-\tightlist
-\item Algoritmos de Machine Learning automatizam a descoberta de padrões e tendências em dados em dum determinado DataSet com o objetivo de prever resultados futuros, identificar relações entre variáveis e tomar decisões relevantes.
-\item Além disso, os algoritmos de Machine Learning podem ser usados para melhorar a eficiência e precisão de processos existentes e para aumentar a capacidade de um sistema de lidar com grandes volumes de dados, como por exemplo o PySpark.
-\item O Spark foi usado para carregar, preparar e processar os dados, bem como para treinar e avaliar modelos de Aprendizagem Automática usando principalmente técnicas de regressão, como árvores de decisão e random forest. Além disso, de também foi usado para realizar consultas SQL.
-\item No inicio deste projeto foram utilizadas técnicas de processamento de dados, análise exploratória. Os dados foram limpos e preparados para o treinamento dos modelos de previsão.
-\item Depois de comparar todos os algoritmos de Machine Learning concluimos que todos os modelos apresentaram resultados razoáveis, mas o modelo de random forest obteve o melhor desempenho com um R2 de 0.998374 e um RMSE de 0.167483. A análise gráfica também confirmou estes resultados, apresentando uma boa relação entre os valores previstos e os valores reais. 
-\item Em geral, pode-se concluir que este projeto foi capaz de prever o IMC (Variável usada em todos os algoritmos de previsão) de uma maenira eficaz.
-\item Foram encontradas algumas dificuldades ao longo deste projeto, tais como: Preparação dos dados (limpeza, manipulação e normalização dos dados), otimização de desempenho e interpretação dos resultados.
-\item Tivemos que também fazer algumas transformações dos dados, como a conversão de colunas de String para tipos numéricos, para que fossem adequados para a aplicação de algoritmos de regressão.
-\item Devido a essa conversão dos tipos de dados, foi necessário restringir a utilização dos algoritmos para apenas regressão, o que limitou as possibilidades de análise dos dados e, portanto, a capacidade de tirar conclusões mais completas sobre o conjunto de dados.
-\end{itemize}
+
+Algoritmos de Machine Learning automatizam a descoberta de padrões e tendências em dados dum determinado DataSet com o objetivo de prever resultados futuros, identificar relações entre variáveis e tomar decisões relevantes.
+Além disso, os algoritmos de Machine Learning podem ser usados para melhorar a eficiência e precisão de processos existentes e para aumentar a capacidade de um sistema de lidar com grandes volumes de dados, como por exemplo o PySpark.
+
+O Spark foi usado para carregar, preparar e processar os dados, bem como para treinar e avaliar modelos de Aprendizagem Automática usando principalmente técnicas de regressão, como árvores de decisão e random forest. Além disso, também foi usado para realizar consultas SQL.
+
+No inicio deste projeto foram utilizadas técnicas de processamento de dados, análise exploratória. Os dados foram limpos e preparados para o treinamento dos modelos de previsão.
+Depois de comparar todos os algoritmos de Machine Learning concluimos que todos os modelos apresentaram resultados razoáveis, mas o modelo de random forest obteve o melhor desempenho com um R2 de 0.998374 e um RMSE de 0.167483. A análise gráfica também confirmou estes resultados, apresentando uma boa relação entre os valores previstos e os valores reais. 
+Em geral, pode-se concluir que este projeto foi capaz de prever o IMC (Variável usada em todos os algoritmos de previsão) de uma maenira eficaz.
+
+Foram encontradas algumas dificuldades ao longo deste projeto, tais como: Preparação dos dados (limpeza, manipulação e normalização dos dados), otimização de desempenho e interpretação dos resultados.
+Tivemos também que fazer algumas transformações dos dados, como a conversão de colunas de String para tipos numéricos, para que fossem adequados para a aplicação de algoritmos de regressão.
+Devido a essas conversões no tipo de dados, foi necessário restringir a utilização dos algoritmos para apenas regressão, o que limitou as possibilidades de análise dos dados e, portanto, a capacidade de tirar conclusões mais completas sobre o conjunto de dados.
+
 
 %%% Bibliografia
 \pagebreak
@@ -1692,4 +1723,5 @@ Provost, F., & Fawcett, T. (2013). Data Science for Business. O'Reilly Media, In
 \bibitem{Muller_2016}
 Müller, A., & Guido, S. (2016). Introduction to Machine Learning with Python. O'Reilly Media, Inc.
 
+\end{thebibliography}
 \end{document}
